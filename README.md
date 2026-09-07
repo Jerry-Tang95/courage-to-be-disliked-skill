@@ -27,7 +27,7 @@
 ### 方式 A：clone / 手动复制（最稳）
 
 ```bash
-git clone https://github.com/Jerry-Tang95/courage-to-be-disliked.git
+git clone https://github.com/Jerry-Tang95/courage-to-be-disliked-skill.git
 
 # 用户级（所有项目通用）
 cp -r courage-to-be-disliked ~/.workbuddy/skills/
