@@ -1,0 +1,62 @@
+{
+  "skill": "courage-to-be-disliked",
+  "version": "0.1.0",
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我想发条朋友圈分享我的作品，但怕同事觉得我炫耀，到底要不要发？",
+      "expected_behavior": "调用 courage-to-be-disliked：检测认可欲求驱动占比，把被讨厌从失败重分类为自由副作用，落回发不发由我定。",
+      "notes": "正面：社交展示恐惧"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我在会上不敢提反对意见，怕得罪领导和同事",
+      "expected_behavior": "调用 courage-to-be-disliked：认可欲求识别，拿回人际之卡，给出表达边界的落地话术。",
+      "notes": "正面：职场从众"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "等我把产品打磨到完美再发布吧，不然被用户喷怎么办？",
+      "expected_behavior": "调用 courage-to-be-disliked：戳破等完美是认可欲求的伪前提，被批评是行使自由的代价。",
+      "notes": "正面：完美主义拖延"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "搬来新城市三个月，还是觉得谁都不认识，好孤独",
+      "expected_behavior": "不应调用 courage-to-be-disliked；应触发同书 community-feeling（归属感三脚架）。",
+      "notes": "跨 skill 混淆诱饵：归属感缺失 ≠ 害怕被讨厌"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "领导让我背锅，我该不该忍？",
+      "expected_behavior": "不应调用 courage-to-be-disliked；应触发同书 task-separation 或 decompete（这是划界/权力斗争问题，不是认可欲求）。",
+      "notes": "跨 skill 混淆诱饵：边界问题"
+    },
+    {
+      "id": "should-not-trigger-03",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一份下周的项目周报",
+      "expected_behavior": "纯任务，不应调用任何 skill。",
+      "notes": "诱饵：任务委托"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我被同事集体排挤孤立了，还要坚持做自己吗？",
+      "expected_behavior": "边界判断：毒性共同体中不被喜欢可能是危险信号，先自保/退出/求救济，不完全套用被讨厌即自由。",
+      "notes": "边界：毒性共同体"
+    },
+    {
+      "id": "edge-02",
+      "type": "edge_case",
+      "prompt": "我上次发言确实说错了，现在大家不爱理我，我要不要道歉？",
+      "expected_behavior": "边界判断：真做错导致的冲突是关系失能而非自由代价，应修复关系；区分健康的被讨厌与关系失能。",
+      "notes": "边界：被讨厌≠做错了"
+    }
+  ]
+}
