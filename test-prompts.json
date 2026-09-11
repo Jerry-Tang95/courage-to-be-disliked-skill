@@ -1,6 +1,8 @@
 {
   "skill": "courage-to-be-disliked",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "source_book": "《被讨厌的勇气》岸见一郎；古贺史健",
+  "darwin_compatible": true,
   "test_cases": [
     {
       "id": "should-trigger-01",
@@ -57,6 +59,15 @@
       "prompt": "我上次发言确实说错了，现在大家不爱理我，我要不要道歉？",
       "expected_behavior": "边界判断：真做错导致的冲突是关系失能而非自由代价，应修复关系；区分健康的被讨厌与关系失能。",
       "notes": "边界：被讨厌≠做错了"
+    },
+    {
+      "id": "should-not-trigger-router",
+      "type": "should_not_trigger",
+      "prompt": "下属方案很差，我该批评他还是换个说法？",
+      "expected_behavior": "不应直接触发本 skill；该请求属于纵向评价语言的替换，应由 beitan-de-yongqi-router 转 horizontal-relation 能力卡处理。",
+      "notes": "与来源路由入口的互斥近邻负例（v2.5 阶段 4 硬性要求）。"
     }
-  ]
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "核心混淆轴见各 case 的 notes；含 1 条与来源路由入口 beitan-de-yongqi-router 的互斥负例。"
 }
