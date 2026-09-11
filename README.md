@@ -1,13 +1,47 @@
 # 被讨厌的勇气 · Agent Skill
 
-> "自由就是被别人讨厌。"
-> —— 岸见一郎、古贺史健《被讨厌的勇气》第三夜
+> "自由就是被别人讨厌。……是你被某人讨厌。这是你行使自由以及活得自由的证据。自由的代价就是在人际关系中，被别人讨厌。"
+> —— 岸见一郎、古贺史健《被讨厌的勇气》第三夜「自由就是被别人讨厌」
 
-一个给 AI Agent 用的心理方法论 Skill：当你因为「别人会怎么看我」「怕被笑话」「不想得罪人」「等更完美了再开始」而退缩时，它帮你把**被讨厌**从「失败」重新分类为「行使自由的副作用」，并把人际关系的遥控器拿回自己手里。
+一个给 AI Agent 用的心理方法论 Skill：当你因为「别人会怎么看我」「怕被笑话」「不想得罪人」「等更完美了再开始」而退缩时，它帮你把**被讨厌**从「失败」重新分类为「行使自由的副作用与证据」，并把人际关系的遥控器拿回自己手里。
+
+**当前版本：v0.2.0**（2026-09-11 更新，按 cangjie-tools v2.5.0 规范重新对齐）
 
 ---
 
-## 一、它解决什么问题
+## 一、本次更新内容（v0.2.0）
+
+> 本次为**整体覆盖式更新**，旧版文案不再保留。以下是与上一版（2026-09-07 发布）的完整差异。
+
+### 1. `SKILL.md`
+
+| # | 变更 | 说明 |
+|---|---|---|
+| 1 | **frontmatter 重写** | `description` 改为「何时用 / 何时不用 / Triggers」三段式，激活判据前置；新增 `metadata` 块（`cangjie.generated-by: cangjie-tools v2.5.0`、`capability-id`、`capability-revision`、`bundle-id`、`source-title`、`tags`）；正文首部新增两行溯源注释（capability_id / 来源路径） |
+| 2 | **R 段原文补全** | 原文引用由单句「也就是说"自由就是被别人讨厌"」扩为完整句——补入"是你被某人讨厌 / 这是你行使自由以及活得自由的证据 / 自由的代价"，避免原文被截断解读；章标注补全为「第三夜「自由就是被别人讨厌」」 |
+| 3 | **E 段 3 步 → 4 步** | 新增第 3 步「**划线：把对方的课题还回去**」（写两栏——对方在意什么 / 我真正想做什么，衔接 `task-separation`），原「拿回遥控器」顺延为第 4 步。补上了"划界"这一缺失的中间环节，此前步骤 2 直接跳到行动宣言 |
+| 4 | **打分口径明确化** | 第一步由模糊的"有多少 %"改为明确的 0–10 整数刻度（**0 = 完全是我自己的意愿，10 = 完全是为了避免被某人讨厌或赢得某人认可**），并新增判分口径：**≥7 分 → 继续；≤3 分 → 认可驱动很低，本 skill 帮助有限，转其它议题** |
+| 5 | **B 段判停条件落地** | 第 2 步新增显式**判停条件**：判为「关系失能」→ 终止并转复盘修复；判为「毒性共同体／霸凌」→ 终止并转自保退出。原版只写了"若是后者，转为修复沟通"，没有可执行的熔断出口 |
+| 6 | **相邻 skill 去重** | 原「相关 skills」段两条 `task-separation` 条目（depends-on + composes-with）重复，合并为一条；`community-feeling` 组合关系保留 |
+
+### 2. `test-prompts.json`
+
+| # | 变更 | 说明 |
+|---|---|---|
+| 1 | **用例 8 → 9 条** | 新增 `should-not-trigger-router`：*"下属方案很差，我该批评他还是换个说法？"* → 应路由到来源入口 `beitan-de-yongqi-router` 转 `horizontal-relation` 卡，**不应**直接触发本 skill（v2.5 阶段 4 硬性要求的「与来源路由入口互斥」负例） |
+| 2 | **新增元字段** | `source_book`、`darwin_compatible: true` |
+| 3 | **新增阈值与备注** | `minimum_pass_rate: 0.8`；`notes` 说明核心混淆轴与负例构成 |
+| 4 | **版本号** | `0.1.0` → `0.2.0` |
+
+### 3. 未变更
+
+- `test-results.md`（8 条历史盲测记录，100% 通过）内容不变，保留为历史存档。
+- 方法论的 R-I-A-E-B 骨架、触发信号、边界清单、与 `task-separation` / `community-feeling` 的依赖与组合关系均无变化。
+- `LICENSE`（MIT）不变。
+
+---
+
+## 二、它解决什么问题
 
 人的很多「不敢」，表面是能力问题，底层是**认可欲求**——把「人际关系之卡」交给了别人，让别人怎么看我来决定我怎么活。
 
@@ -22,28 +56,29 @@
 
 ---
 
-## 二、安装
+## 三、安装
 
 ### 方式 A：clone / 手动复制（最稳）
 
+仓库根目录即为 Skill 内容（无外层包裹目录），clone 后把内容放进 skills 目录下的 `courage-to-be-disliked/`：
+
 ```bash
 git clone https://github.com/Jerry-Tang95/courage-to-be-disliked-skill.git
+mkdir -p ~/.workbuddy/skills/courage-to-be-disliked
+cp -r courage-to-be-disliked-skill/* ~/.workbuddy/skills/courage-to-be-disliked/
 
-# 用户级（所有项目通用）
-cp -r courage-to-be-disliked ~/.workbuddy/skills/
-
-# 项目级（仅当前项目）
-cp -r courage-to-be-disliked .workbuddy/skills/
+# 项目级（仅当前项目）：换成 .workbuddy/skills/courage-to-be-disliked/
 ```
 
-目录结构要求：
+装完的目录结构：
 
 ```
 ~/.workbuddy/skills/
 └── courage-to-be-disliked/
     ├── SKILL.md            # 必须，Agent 读的就是这个
-    ├── test-prompts.json   # 触发测试用例
-    └── test-results.md     # 盲测结果
+    ├── test-prompts.json   # 触发测试用例（9 条）
+    ├── test-results.md     # 盲测结果
+    └── README.md           # 本文件
 ```
 
 ### 方式 B：通过 Skill 市场
@@ -56,9 +91,15 @@ omni-cli skillshub install courage-to-be-disliked
 
 安装后重启 / 刷新 Agent 会话，让 Skill 列表重新加载即可生效。
 
+**30 秒验证装没装好**，直接对 Agent 说：
+
+> 我想发条朋友圈分享我的作品，但怕同事觉得我炫耀，到底要不要发？
+
+回答里出现「0–10 打几分」「发不发由我定」这类句式，就是装好了。
+
 ---
 
-## 三、什么时候会自动触发
+## 四、什么时候会自动触发
 
 无需手动调用。当你的话里出现这些信号，Agent 会自行加载本 Skill：
 
@@ -78,7 +119,7 @@ omni-cli skillshub install courage-to-be-disliked
 
 ---
 
-## 四、使用说明与例子
+## 五、使用说明与例子
 
 ### 例子 1：想发朋友圈但怕被说炫耀（正面触发）
 
@@ -90,14 +131,18 @@ omni-cli skillshub install courage-to-be-disliked
 
 ```
 第 1 步 · 检测认可欲求占比
-「你这个'不发'的决定，有多少 % 是为了避免被同事讨厌 / 赢得他们认可？」
-（引导你给出 0–10 的自评，通常落在 7–9）
+「打一个 0–10 的分：0 = 完全是我自己的意愿，10 = 完全是为了避免被同事讨厌 / 赢得他们认可。」
+（通常落在 7–9 分 → 主要由认可欲求驱动，继续）
 
 第 2 步 · 区分性质
-判断这是「行使自由的副作用」还是「真的会伤害人」。
-→ 分享作品本身不伤害任何人，属于前者。
+这是「行使自由的副作用」还是「真的会伤害人」？
+→ 分享作品本身不伤害任何人，属于前者，不熔断。
 
-第 3 步 · 拿回遥控器
+第 3 步 · 划线：把对方的课题还回去
+对方的课题：同事怎么解读这条朋友圈。
+我的课题：我要不要分享作品、怎么分享。
+
+第 4 步 · 拿回遥控器
 「发不发、发什么、什么时候发，由我定。有人觉得炫耀，那是他的课题。」
 ```
 
@@ -141,6 +186,7 @@ omni-cli skillshub install courage-to-be-disliked
 |---|---|---|
 | 「搬来新城市三个月，谁都不认识，好孤独」 | 归属感缺失 ≠ 害怕被讨厌 | `community-feeling` |
 | 「领导让我背锅，我该不该忍？」 | 这是划界 / 权力斗争问题 | `task-separation` / `decompete` |
+| 「下属方案很差，我该批评他还是换个说法？」 | 这是纵向评价语言的替换，不是认可欲求 | `beitan-de-yongqi-router` → `horizontal-relation` |
 | 「帮我写一份下周的项目周报」 | 纯任务委托 | 不调用任何 Skill |
 
 ### 例子 5：边界情况（会主动踩刹车）
@@ -149,7 +195,7 @@ omni-cli skillshub install courage-to-be-disliked
 
 > 我被同事集体排挤孤立了，还要坚持做自己吗？
 
-**Agent 不会**套用「被讨厌 = 自由」。在**毒性共同体**里，不被喜欢可能是真实的危险信号（排挤、报复）。它会先建议：自保 / 退出 / 寻求外部救济，而不是鼓励你硬扛。
+**Agent 不会**套用「被讨厌 = 自由」。在**毒性共同体**里，不被喜欢可能是真实的危险信号（排挤、报复）。它会先建议：自保 / 退出 / 寻求外部救济，而不是鼓励你硬扛。—— 这是 E 段第 2 步的**显式判停条件**。
 
 **另一个边界**
 
@@ -159,9 +205,9 @@ omni-cli skillshub install courage-to-be-disliked
 
 ---
 
-## 五、工作原理
+## 六、工作原理
 
-### 5.1 骨架：R-I-A-E-B
+### 6.1 骨架：R-I-A-E-B
 
 `SKILL.md` 按固定五段结构组织，这是 Agent 能稳定执行的根本原因：
 
@@ -171,12 +217,12 @@ omni-cli skillshub install courage-to-be-disliked
 | **I** Interpretation | 方法论骨架：定义 + 机制 + 关键澄清 |
 | **A1** Past Application | 书中的应用案例（祖母的镜子、青年和上司） |
 | **A2** Future Trigger ★ | **触发条件**：情境 + 语言信号 + 与相邻 Skill 的区分 |
-| **E** Execution | **可执行步骤**：Agent 拿到后照做的 1-2-3 |
+| **E** Execution | **可执行步骤**：Agent 拿到后照做的 1-2-3-4 |
 | **B** Boundary ★ | **熔断条件**：什么情况下不许用 |
 
 `★` 标记的两段是激活质量的关键——A2 决定「该不该叫醒」，B 决定「叫醒后要不要踩刹车」。
 
-### 5.2 激活链路
+### 6.2 激活链路
 
 ```
 用户输入
@@ -189,15 +235,15 @@ omni-cli skillshub install courage-to-be-disliked
    ├─ 命中 → 熔断，转修复 / 救济 / 相邻 Skill
    └─ 未命中 → 继续
    ↓
-④ 执行 E 三步：检测占比 → 区分性质 → 拿回遥控器
+④ 执行 E 四步：检测占比 → 区分性质 → 划线还回课题 → 拿回遥控器
    ↓
 ⑤ 输出：一句行动宣言 + 落地话术（禁止裸用「要有勇气」）
 ```
 
-### 5.3 三个核心设计
+### 6.3 三个核心设计
 
 **① 量化而不是说教**
-第一步永远是让用户打分——「这个决定有多少 % 是为了避免被讨厌」。把模糊的情绪变成可讨论的数字，避免 Agent 陷入空泛安慰。
+第一步永远是让用户打分——**0 = 完全是我自己的意愿，10 = 完全是为了避免被某人讨厌或赢得某人认可**。把模糊的情绪变成可讨论的数字，避免 Agent 陷入空泛安慰。v0.2.0 起加了判分口径：7 分以上才继续走本 skill，3 分以下说明认可驱动很低，应转向其它议题。
 
 **② 重分类：被讨厌是「证据」不是「目标」**
 这是最容易被误用的一点，Skill 里反复澄清：
@@ -213,7 +259,7 @@ omni-cli skillshub install courage-to-be-disliked
 - 把被讨厌当目标 → 明确违背自由本意
 - 结构性不公 / 虐待 / 贫困 → 仅强调勇气可能让受害者内化压迫，应寻求制度性救济（这是原书的时代局限）
 
-### 5.4 与相邻 Skill 的关系
+### 6.4 与相邻 Skill 的关系
 
 ```
         task-separation（课题分离）· 依赖
@@ -224,23 +270,39 @@ omni-cli skillshub install courage-to-be-disliked
 ```
 
 - **减法 vs 加法**：本 Skill 是减法（放下认可欲求），共同体感觉是加法（自我接纳 / 他者信赖 / 他者贡献）。贡献而不图认可，需要被讨厌的勇气，所以二者常配对出现。
-- **划界 vs 代价**：课题分离是「划界动作」，本 Skill 是「划界后招致非议时怎么扛」，二者几乎总配套。
+- **划界 vs 代价**：课题分离是「划界动作」，本 Skill 是「划界后招致非议时怎么扛」，二者几乎总配套（本 Skill → `task-separation` 为 depends-on）。
 
 ---
 
-## 六、测试
+## 七、测试
 
-`test-prompts.json` 含 8 个用例，覆盖 3 类：
+`test-prompts.json` 含 **9 个用例**，覆盖 3 类：
 
 | 类型 | 数量 | 目的 |
 |---|---|---|
 | `should_trigger` | 3 | 该叫醒的时候必须叫醒 |
-| `should_not_trigger` | 3 | 含跨 Skill 混淆诱饵，必须忍住 / 分流 |
+| `should_not_trigger` | 4 | 含跨 Skill 混淆诱饵 + 1 条来源路由入口互斥负例，必须忍住 / 分流 |
 | `edge_case` | 2 | 边界场景必须踩刹车 |
 
-**盲测结果：8/8 通过（100%）**
+### 全部用例（可直接拿来验证）
+
+| ID | 类型 | 提问 | 期望行为 |
+|---|---|---|---|
+| `should-trigger-01` | should_trigger | 我想发条朋友圈分享我的作品，但怕同事觉得我炫耀，到底要不要发？ | 调用本 skill：检测认可欲求占比 → 重分类 → 落回"发不发由我定" |
+| `should-trigger-02` | should_trigger | 我在会上不敢提反对意见，怕得罪领导和同事 | 调用本 skill：认可欲求识别 → 拿回人际之卡 → 给表达边界的话术 |
+| `should-trigger-03` | should_trigger | 等我把产品打磨到完美再发布吧，不然被用户喷怎么办？ | 调用本 skill：戳破"等完美"是认可欲求的伪前提 |
+| `should-not-trigger-01` | should_not_trigger | 搬来新城市三个月，还是觉得谁都不认识，好孤独 | 不触发；转 `community-feeling`（归属感缺失 ≠ 害怕被讨厌） |
+| `should-not-trigger-02` | should_not_trigger | 领导让我背锅，我该不该忍？ | 不触发；转 `task-separation` / `decompete`（划界问题，非认可欲求） |
+| `should-not-trigger-03` | should_not_trigger | 帮我写一份下周的项目周报 | 不触发任何 skill（纯任务委托） |
+| `should-not-trigger-router` **（v0.2.0 新增）** | should_not_trigger | 下属方案很差，我该批评他还是换个说法？ | 不触发；由来源入口 `beitan-de-yongqi-router` 转 `horizontal-relation` |
+| `edge-01` | edge_case | 我被同事集体排挤孤立了，还要坚持做自己吗？ | 边界判断：毒性共同体先自保 / 退出 / 求救济，不套用"被讨厌即自由" |
+| `edge-02` | edge_case | 我上次发言确实说错了，现在大家不爱理我，我要不要道歉？ | 边界判断：关系失能而非自由代价，引导复盘修复 |
+
+**历史盲测结果：8/8 通过（100%）**，阈值 `minimum_pass_rate: 0.8`。
 
 测试方式是「独立 sub-agent 盲测」——不给它标注好的 type/expected，只给同书 9 个 Skill 的名称 + 描述作为候选池，模拟真实激活选择。这是防止「自我验证」的关键设计。详见 `test-results.md`。
+
+> 注：`test-results.md` 记录的是 v0.1.0 的 8 条用例盲测；v0.2.0 新增的 router 互斥负例尚未纳入盲测记录，复跑时一并补测。
 
 复跑测试：
 
@@ -251,24 +313,26 @@ omni-cli skillshub install courage-to-be-disliked
 
 ---
 
-## 七、目录结构
+## 八、目录结构
 
 ```
-courage-to-be-disliked/
+courage-to-be-disliked-skill/          # GitHub 仓库根（平铺，无外层包裹目录）
 ├── SKILL.md              # Skill 主体（Agent 唯一必读文件）
-├── test-prompts.json     # 触发测试用例（8 条）
-├── test-results.md       # 盲测通过率报告
+├── test-prompts.json     # 触发测试用例（9 条）
+├── test-results.md       # 盲测通过率报告（v0.1.0，8 条）
 ├── README.md             # 本文件
 └── LICENSE               # MIT
 ```
 
 ---
 
-## 八、来源与许可
+## 九、来源与许可
 
 - **原著**：岸见一郎、古贺史健《被讨厌的勇气》第三夜「自由就是被别人讨厌」
-- **蒸馏方式**：R-I-A-E-B 结构化提炼，附盲测验证
-- **蒸馏日期**：2026-08-25
+- **蒸馏方式**：R-I-A-E-B 结构化提炼，附盲测验证；v0.2.0 按 cangjie-tools v2.5.0 规范重新对齐
+- **capability-id**：`cap.beitan-de-yongqi.courage-to-be-disliked`
+- **bundle-id**：`bundle.beitan-de-yongqi`
+- **初次蒸馏**：2026-08-25 ｜ **本版更新**：2026-09-11
 - **许可**：MIT
 
 > ⚠️ 本 Skill 是思维工具，不是心理治疗。若涉及持续性的抑郁、创伤或真实的人身安全威胁，请寻求专业帮助或制度性救济，不要用它硬扛。
