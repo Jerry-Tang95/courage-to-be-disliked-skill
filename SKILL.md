@@ -1,26 +1,25 @@
 ---
 name: courage-to-be-disliked
 description: |
-  当用户因"别人会怎么看我""怕被笑话/讨厌""不想得罪人""等更完美了再开始"而退缩时使用(courage to be disliked / 被讨厌的勇气)。本 skill 检测认可欲求[g23]的驱动占比, 把"被讨厌"从失败重分类为行使自由[g16]的副作用, 帮用户把人际之卡拿回自己手中, 给出"发不发/做不做由我定"的落地话术。不适用于: 毒性共同体/霸凌环境(被讨厌可能是真危险); 真做错或沟通失败导致的冲突(那是关系失能, 非自由代价); 以及把"被讨厌"当目标故意惹人厌。
-source_book: 《被讨厌的勇气》岸见一郎；古贺史健
-source_chapter: 第三夜「自由就是被别人讨厌」
-tags: [freedom, approval, courage, adler, self-acceptance]
-related_skills:
-  - slug: task-separation
-    relation: depends-on
-  - slug: task-separation
-    relation: composes-with
-  - slug: community-feeling
-    relation: composes-with
+  何时用：因"别人会怎么看我""怕被笑话／讨厌""不想得罪人""等更完美了再开始"而退缩时。核心动作：检测认可欲求的驱动占比，把"被讨厌"从失败重分类为行使自由的副作用与证据，给出"发不发／做不做由我定"的落地话术。何时不用：被集体排挤／孤立／霸凌等真实危险场景（此时"坚持做自己"不是勇气而是硬扛，优先自保、退出或外部救济）；真做错或沟通失败导致的冲突（那是关系失能，非自由代价）；把"被讨厌"当目标故意惹人厌。Triggers: 被讨厌的勇气、怕被笑话、别人会怎么看我、不想得罪人、求认可、courage to be disliked、approval-seeking。
+metadata:
+  cangjie.generated-by: cangjie-tools v2.5.0
+  cangjie.capability-id: cap.beitan-de-yongqi.courage-to-be-disliked
+  cangjie.capability-revision: 1
+  cangjie.bundle-id: bundle.beitan-de-yongqi
+  cangjie.source-title: 《被讨厌的勇气："自我启发之父"阿德勒的哲学课》
+  cangjie.tags: freedom, approval, courage, adler, self-acceptance
 ---
+<!-- capability_id: cap.beitan-de-yongqi.courage-to-be-disliked | revision: 1 | status: active -->
+<!-- 来源: beitan-de-yongqi/courage-to-be-disliked/SKILL.md（正文逐字保留） -->
 
 # 被讨厌勇气量表（自由=被讨厌）
 
 ## R — 原文 (Reading)
 
-> 也就是说"自由就是被别人讨厌"。
+> 自由就是被别人讨厌。……是你被某人讨厌。这是你行使自由以及活得自由的证据。自由的代价就是在人际关系中，被别人讨厌。
 >
-> — 岸见一郎；古贺史健, 第三夜
+> — 岸见一郎；古贺史健, 第三夜「自由就是被别人讨厌」
 
 ---
 
@@ -74,12 +73,17 @@ related_skills:
 当 skill 被激活后, agent 应按以下步骤执行:
 
 1. **检测认可欲求占比**
-   - 完成标准: 让用户对当前选择打分——"你这个决定，有多少 % 是为了避免被某人讨厌 / 赢得某人认可？"给出 0–10 的驱动占比。
+   - 完成标准: 让用户对当前选择打一个 0–10 的整数分——"0 = 完全是我自己的意愿，10 = 完全是为了避免被某人讨厌或赢得某人认可"。
+   - 判分口径: 7 分以上 = 该决定主要由认可欲求驱动，继续第 2 步；3 分以下 = 认可驱动很低，本 skill 帮助有限，可转向其它议题。
 
 2. **区分健康被讨厌 vs 关系失能**
-   - 完成标准: 判断"被讨厌"属于"行使自由的副作用"还是"自己真做错/沟通失败"；若是后者，转为修复沟通而非鼓吹勇气。
+   - 完成标准: 判断"被讨厌"属于"行使自由的副作用"还是"自己真做错／沟通失败"。
+   - 判停条件: 判定为"关系失能"（真做错、沟通失败）→ 终止本 skill，转为复盘并修复沟通；判定为毒性共同体／霸凌 → 终止本 skill，转自保与退出路径。两类都不成立才进入第 3 步。
 
-3. **拿回遥控器**
+3. **划线：把对方的课题还回去**
+   - 完成标准: 写下两栏——"我担心的那个人在意的是什么"（对方的课题）与"我真正想做什么"（我的课题）；确认评价归对方、选择权归自己（衔接 task-separation）。
+
+4. **拿回遥控器**
    - 完成标准: 产出一句不被认可欲求[g23]绑架的行动宣言（如"发不发、发什么由我定"），把人际之卡握回自己手中[g16]。
 
 ---
@@ -113,8 +117,7 @@ related_skills:
 
 ## 相关 skills (阶段 3 填充)
 
-- **依赖 depends-on · 课题分离决策卡** `task-separation`: 被讨厌勇气是课题分离后不再寻求认可的必然结果(本 skill → task-separation 为 depends-on)。
-- **组合 composes-with · 课题分离决策卡** `task-separation`: 划界动作与承受被讨厌的勇气代价，二者几乎总配套。
+- **依赖 depends-on · 课题分离决策卡** `task-separation`: 被讨厌勇气是课题分离后不再寻求认可的必然结果；划界动作与承受被讨厌的勇气代价几乎总配套（本 skill → task-separation 为 depends-on）。
 - **组合 composes-with · 共同体感觉三脚架** `community-feeling`: 贡献而不图认可需要被讨厌的勇气，减法(放下认可)与加法(投入贡献)常配对。
 
 ---
