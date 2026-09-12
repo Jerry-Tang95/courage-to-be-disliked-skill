@@ -1,0 +1,94 @@
+{
+  "skill": "beitan-de-yongqi-router",
+  "version": "0.1.0",
+  "source_book": "《被讨厌的勇气》岸见一郎；古贺史健",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我总把没做成的事归到「要不是当年没考上好学校」，这算不算在给自己找借口？",
+      "expected_behavior": "经路由入口进入，指向 references/capabilities/life-lie-detector.md：识别「为回避课题而倒置的因果」。",
+      "notes": "轴：人生谎言识别（life-lie-detector）"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "他最近突然全是缺点，我是不是在给自己找分手的理由？",
+      "expected_behavior": "经路由入口进入，指向 life-lie-detector.md：识别「先讨厌再找缺点」的关系借口。",
+      "notes": "轴：人生谎言识别（life-lie-detector）"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我该怎么表扬孩子才不会让他觉得被俯视？",
+      "expected_behavior": "经路由入口进入，指向 references/capabilities/horizontal-relation.md：把纵向评价语言替换为感谢+鼓励。",
+      "notes": "轴：横向关系替换术（horizontal-relation）"
+    },
+    {
+      "id": "should-trigger-04",
+      "type": "should_trigger",
+      "prompt": "下属做得不好，除了批评还能怎么说？",
+      "expected_behavior": "经路由入口进入，指向 horizontal-relation.md。",
+      "notes": "轴：横向关系替换术（horizontal-relation）"
+    },
+    {
+      "id": "should-trigger-05",
+      "type": "should_trigger",
+      "prompt": "《被讨厌的勇气》整本书的核心主张是什么？",
+      "expected_behavior": "不加载能力卡，直接读 references/overview.md 与「核心原则」回答。",
+      "notes": "轴：跨能力概览"
+    },
+    {
+      "id": "should-trigger-06",
+      "type": "should_trigger",
+      "prompt": "书里说的「课题分离」到底是什么意思？",
+      "expected_behavior": "读 references/glossary.md 解释术语，不启动决策流程。",
+      "notes": "轴：术语查询"
+    },
+    {
+      "id": "should-not-trigger-07",
+      "type": "should_not_trigger",
+      "prompt": "我连续两周睡不着、觉得活着没意思，什么方法都没用。",
+      "expected_behavior": "不适用本书方法（含自杀风险信号）：停止方法论输出，建议立即寻求专业帮助，不得套用「目的论」解释。",
+      "notes": "轴：越界：临床"
+    },
+    {
+      "id": "should-not-trigger-08",
+      "type": "should_not_trigger",
+      "prompt": "公司长期拖欠工资还威胁不让我离职，我该怎么办？",
+      "expected_behavior": "不适用本书方法：这属制度性/法律问题，应建议劳动仲裁与法律途径，不能用「课题分离」劝其接受。",
+      "notes": "轴：越界：结构性不公"
+    },
+    {
+      "id": "should-not-trigger-09",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下这本书是哪年出版的。",
+      "expected_behavior": "纯事实查询，直接回答，不启动任何能力卡。",
+      "notes": "轴：越界：信息查询而非咨询"
+    },
+    {
+      "id": "edge-case-10",
+      "type": "edge_case",
+      "prompt": "我决定从今天起谁都不理，我就是要让他们讨厌我。",
+      "expected_behavior": "边界处理：被讨厌是自由的证据而非目标，故意惹人厌不是本框架的用法；应澄清并拒绝为该行为背书。",
+      "notes": "轴：边界：把被讨厌当目标"
+    },
+    {
+      "id": "edge-case-11",
+      "type": "edge_case",
+      "prompt": "我在团队里被集体排挤，是不是我应该拿出被讨厌的勇气继续坚持？",
+      "expected_behavior": "边界处理：毒性共同体属于危险场景，应转向自保与退出路径，而非套用「被讨厌即自由」。",
+      "notes": "轴：边界：毒性共同体"
+    },
+    {
+      "id": "edge-case-12",
+      "type": "edge_case",
+      "prompt": "我想发这条朋友圈但怕同事觉得我在炫耀，要不要发？",
+      "expected_behavior": "已安装 courage-to-be-disliked 时应直接触发该独立 Skill，而非经路由入口；本入口仅在未安装晋级 Skill 时兜底。",
+      "notes": "轴：晋级 Skill 已安装时的优先级"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "路由入口用例：验证「该走路由的场景能命中正确能力卡」与「越界场景必须停」；含晋级 Skill 的反向互斥负例。"
+}
